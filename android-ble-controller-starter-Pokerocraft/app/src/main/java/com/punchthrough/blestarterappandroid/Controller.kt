@@ -10,6 +10,8 @@ import com.punchthrough.blestarterappandroid.R
 import com.punchthrough.blestarterappandroid.ble.ConnectionManager
 import timber.log.Timber
 import java.util.UUID
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Controller : AppCompatActivity() {
 
@@ -33,11 +35,11 @@ class Controller : AppCompatActivity() {
         btnControl.setOnTouchListener { view, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    sendToArduino("1")
+                    sendToArduino("1\n")
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    sendToArduino("0")
+                    sendToArduino("0\n")
                     true
                 }
                 else -> false
@@ -54,8 +56,8 @@ class Controller : AppCompatActivity() {
         val rad = Math.toRadians(angle.toDouble())
         val nx = cos(rad) * strength / 100.0
         val ny = -sin(rad) * strength / 100.0
-        val bx = ((nx + 1.0) * 127.5).toInt().coerceIn(0, 255)
-        val by = ((ny + 1.0) * 127.5).toInt().coerceIn(0, 255)
+        val bx = ((nx + 1.0) * 127.5).toInt().coerceIn(0, 255)-127
+        val by = ((ny + 1.0) * 127.5).toInt().coerceIn(0, 255)-127
         sendToArduino("J,$bx,$by\n")
     }
 

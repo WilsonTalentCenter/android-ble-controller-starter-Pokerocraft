@@ -16,24 +16,25 @@
         android:text="on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.603"
         />
-		
-	<com.punchthrough.blestarterappandroid.JoystickView
+
+    <com.punchthrough.blestarterappandroid.JoystickView
         android:id="@+id/joystick_custom"
         android:layout_width="312dp"
         android:layout_height="295dp"
         android:layout_margin="8dp"
-        android:layout_marginTop="212dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_led_on"
-        app:layout_constraintVertical_bias="0.686"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
