@@ -20,7 +20,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdk 34
     defaultConfig {
-        applicationId "com.punchthrough.blestarterappandroid"
+        applicationId "com.riley.yetAnotherBLE"
         minSdk 21
         targetSdk 34
         versionCode 2

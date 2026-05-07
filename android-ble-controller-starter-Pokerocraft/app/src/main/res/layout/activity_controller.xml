@@ -9,19 +9,6 @@
     tools:context=".Controller"
     >
 
-    <Button
-        android:id="@+id/button_led_on"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="on"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603"
-        />
-
     <com.punchthrough.blestarterappandroid.JoystickView
         android:id="@+id/joystick_custom"
         android:layout_width="312dp"
@@ -35,6 +22,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.94"
+        />
+
+    <Button
+        android:id="@+id/upButton"
+        android:layout_width="96dp"
+        android:layout_height="60dp"
+        android:text="Up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444"
+        />
+
+    <Button
+        android:id="@+id/downButton"
+        android:layout_width="96dp"
+        android:layout_height="60dp"
+        android:text="Down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.606"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

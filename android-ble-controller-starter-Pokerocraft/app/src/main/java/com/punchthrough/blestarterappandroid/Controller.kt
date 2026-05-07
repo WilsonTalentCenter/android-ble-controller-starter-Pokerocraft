@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.punchthrough.blestarterappandroid.R
 import com.punchthrough.blestarterappandroid.ble.ConnectionManager
 import timber.log.Timber
 import java.util.UUID
@@ -17,6 +16,28 @@ class Controller : AppCompatActivity() {
 
     // 1. Define the device variable at the top
     private lateinit var device: BluetoothDevice
+
+    /**
+     * A sort of method so I don't have to repeat the same method 4 times with different values, and also technically expandable with more buttons.
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setDpadListener(buttonId: Int, pressValue: Int, releaseValue: Int) {
+        val button = findViewById<Button>(buttonId)
+        button.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    sendToArduino("$pressValue\n")
+                    true
+                }
+
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    sendToArduino("$releaseValue\n")
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,25 +52,30 @@ class Controller : AppCompatActivity() {
        // val btnLedOn = findViewById<Button>(R.id.button_led_on)
 
 
-        val btnControl = findViewById<Button>(R.id.button_led_on)
-        btnControl.setOnTouchListener { view, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    sendToArduino("1\n")
-                    true
-                }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    sendToArduino("0\n")
-                    true
-                }
-                else -> false
-            }
-        }
+
+//        val btnControl = findViewById<Button>(R.id.button_led_on)
+//        btnControl.setOnTouchListener { view, event ->
+//            when (event.action) {
+//                MotionEvent.ACTION_DOWN -> {
+//                    sendToArduino("1\n")
+//                    true
+//                }
+//                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+//                    sendToArduino("0\n")
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+
+
 
         val joystick = findViewById<JoystickView>(R.id.joystick_custom)
         joystick.onMoveListener = { angle, strength ->
             sendJoystickPosition(angle, strength)
         }
+        setDpadListener(R.id.upButton, 1, 0)
+        setDpadListener(R.id.downButton, 3, 2)
     }
 
     private fun sendJoystickPosition(angle: Int, strength: Int) {
