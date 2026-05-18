@@ -5,7 +5,7 @@ const int FL_IN1 = 30; const int FL_IN2 = 28; const int FL_SPD = 8;
 const int FR_IN1 = 31; const int FR_IN2 = 29; const int FR_SPD = 9;
 const int BL_IN1 = 25; const int BL_IN2 = 23; const int BL_SPD = 11; //25, 23, 11
 const int BR_IN1 = 24; const int BR_IN2 = 22; const int BR_SPD = 10; // 24, 22, 10
-const int ARM_SPD = 42; const int ARM_DIR = 67; //Placeholder values
+const int ARM_SPD = 7; const int ARM_DIR = 43; const int ARM_5V = 37; const int ARM_DIR2 = 41; const int ARM_GROUND = 39;
 
 void setup() {
   // initialize serial:
@@ -13,11 +13,14 @@ void setup() {
   Serial1.begin(9600);
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
-  int digitalPins[] = {FR_IN1, FR_IN2, FL_IN1, FL_IN2, BR_IN1, BR_IN2, BL_IN1, BL_IN2, ARM_DIR};
+  int digitalPins[] = {FR_IN1, FR_IN2, FL_IN1, FL_IN2, BR_IN1, BR_IN2, BL_IN1, BL_IN2, ARM_DIR, ARM_GROUND};
   for (int i = 0; i < 9; i++) {
     pinMode(digitalPins[i], OUTPUT);
     digitalWrite(digitalPins[i], LOW);
   }
+pinMode(ARM_5V, OUTPUT);
+digitalWrite(ARM_5V, HIGH);
+
   int analogPins[] = {FR_SPD, FL_SPD, BR_SPD, BL_SPD, ARM_SPD};
   for (int i = 0; i < 5; i++){
     pinMode(analogPins[i], OUTPUT);
@@ -37,9 +40,10 @@ void loop() {
       int command = inputString.toInt();
 
       switch (command) {
-        case 0: 
+        moveArm(command);
       }
     }
+  }
 }
 /*
 Effectively parses the joystick's data in order to drive
@@ -71,18 +75,22 @@ void moveArm(int direction) {
   switch(direction) {
     case 0:
       digitalWrite(ARM_DIR, HIGH);
+      digitalWrite(ARM_DIR2, LOW);
       analogWrite(ARM_SPD, 150);
-      break
+      break;
     case 2:
       digitalWrite(ARM_DIR, LOW);
+      digitalWrite(ARM_DIR2, HIGH);
       analogWrite(ARM_SPD, 150);
       break;
     case 1:
       digitalWrite(ARM_DIR, LOW);
+      digitalWrite(ARM_DIR2, HIGH);
       analogWrite(ARM_SPD, 0);
       break;
     case 3: 
     digitalWrite(ARM_DIR, LOW);
+    digitalWrite(ARM_DIR2, HIGH);
     analogWrite(ARM_SPD, 0);
     break;
   }
