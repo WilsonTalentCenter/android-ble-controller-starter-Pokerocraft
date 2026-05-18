@@ -13,8 +13,8 @@ void setup() {
   Serial1.begin(9600);
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
-  int digitalPins[] = {FR_IN1, FR_IN2, FL_IN1, FL_IN2, BR_IN1, BR_IN2, BL_IN1, BL_IN2, ARM_DIR, ARM_GROUND};
-  for (int i = 0; i < 9; i++) {
+  int digitalPins[] = {FR_IN1, FR_IN2, FL_IN1, FL_IN2, BR_IN1, BR_IN2, BL_IN1, BL_IN2, ARM_DIR, ARM_GROUND, ARM_DIR2};
+  for (int i = 0; i < 11; i++) {
     pinMode(digitalPins[i], OUTPUT);
     digitalWrite(digitalPins[i], LOW);
   }
@@ -32,17 +32,15 @@ void loop() {
   // print the string when a newline arrives:
   if (stringComplete) {
     inputString.trim();
-
     if (inputString.startsWith("J")) {
       parseJoystick(inputString);
     }
     else {
       int command = inputString.toInt();
-
-      switch (command) {
-        moveArm(command);
-      }
+      moveArm(command);
     }
+    inputString = "";
+    stringComplete = false;
   }
 }
 /*
@@ -72,27 +70,29 @@ void drive(int x, int y) {
 }
 
 void moveArm(int direction) {
+  Serial.println(direction);
   switch(direction) {
-    case 0:
+    case 1:
       digitalWrite(ARM_DIR, HIGH);
       digitalWrite(ARM_DIR2, LOW);
       analogWrite(ARM_SPD, 150);
       break;
-    case 2:
+    case 3: 
       digitalWrite(ARM_DIR, LOW);
       digitalWrite(ARM_DIR2, HIGH);
       analogWrite(ARM_SPD, 150);
       break;
-    case 1:
+    case 0:
       digitalWrite(ARM_DIR, LOW);
-      digitalWrite(ARM_DIR2, HIGH);
+      digitalWrite(ARM_DIR2, LOW);
       analogWrite(ARM_SPD, 0);
       break;
-    case 3: 
-    digitalWrite(ARM_DIR, LOW);
-    digitalWrite(ARM_DIR2, HIGH);
-    analogWrite(ARM_SPD, 0);
-    break;
+    case 2:
+      digitalWrite(ARM_DIR, LOW);
+      digitalWrite(ARM_DIR2, LOW);
+      analogWrite(ARM_SPD, 0);
+      break;
+    
   }
 }
 
